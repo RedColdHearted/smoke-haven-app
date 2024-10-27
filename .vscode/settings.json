@@ -1,0 +1,11 @@
+{
+    "cSpell.words": [
+        "dotenv",
+        "imagekit",
+        "imagekitmodels"
+    ],
+    "files.exclude": {
+       "**/__pycache__": true
+     },
+     "editor.rulers": [79]
+}

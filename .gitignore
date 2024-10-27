@@ -1,0 +1,12 @@
+# sqlite db instance
+**.sqlite3
+
+#__pycache__ files
+__pycache__/
+
+#python venv folder
+.venv
+venv
+
+#env file
+.env
