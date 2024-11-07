@@ -1,0 +1,16 @@
+<div class="w-100 my-4">
+    <div class="d-flex justify-content-between">
+        <span>0₽</span>
+        <span>{{ invoice.amount_to_pay }}₽</span>
+    </div>
+    <div class="progress" style="height: 30px; font-size: 18px;margin-right: 10%;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" 
+             role="progressbar" 
+             style="width: {{ payment_percentage }}%;" 
+             aria-valuenow="{{ payment_percentage }}" 
+             aria-valuemin="0" 
+             aria-valuemax="100">
+             {{invoice.total_amount | floatformat:2}}
+        </div>
+    </div>
+</div>

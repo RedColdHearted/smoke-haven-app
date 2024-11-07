@@ -25,6 +25,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "issues:issues"
+LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "users:login"
 LOGOUT_REDIRECT_URL = "users:login"

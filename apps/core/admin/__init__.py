@@ -1,1 +1,1 @@
-from base_admin import BaseAdmin
+from .base_admin import BaseAdmin

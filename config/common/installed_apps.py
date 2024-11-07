@@ -9,18 +9,20 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
 )
 
-
 THIRD_PARTY = (
     "imagekit",
     "django_filters",
     "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
+    "debug_toolbar",
 )
 
 LOCAL_APPS = (
     "apps.core",
     "apps.users",
+    "apps.products",
+    "apps.invoices",
 )
 
 INSTALLED_APPS += THIRD_PARTY + LOCAL_APPS

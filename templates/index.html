@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>some page</title>
-</head>
-<body>
-    <h1>some page</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block style %}
+{% endblock %}
+{% block page_name %}
+<div class="w-100 d-flex justify-content-center">
+    <a class="navbar-brand mx-auto" href="#">Главная</a>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="content-container text-center">
+        <p>Это основной блок с текстом на главной странице.</p>
+    </div>
+{% endblock %}

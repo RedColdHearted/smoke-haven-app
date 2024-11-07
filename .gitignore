@@ -10,3 +10,9 @@ venv
 
 #env file
 .env
+
+#django media files
+media/
+
+#compiled languages file
+django.mo
