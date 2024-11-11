@@ -1,1 +1,1 @@
-from .supplier import CreateSupplierView, ListSupplierView
+from .supplier import CreateSupplierView, ListSupplierView, UpdateSupplierView

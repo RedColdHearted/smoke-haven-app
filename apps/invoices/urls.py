@@ -5,6 +5,7 @@ from .views import (
     CreateInvoiceView,
     DetailInvoiceView,
     DeleteInvoiceView,
+    UpdateInvoiceView,
     DownloadDocumentView,
     DeleteDocumentView,
     UploadDocumentByInvoiceView,
@@ -34,6 +35,11 @@ urlpatterns = [
         "delete/<int:pk>/",
         DeleteInvoiceView.as_view(),
         name="delete_invoice",
+    ),
+    path(
+        "update/<int:pk>/",
+        UpdateInvoiceView.as_view(),
+        name="update_invoice",
     ),
     path(
         'documents/download/<int:pk>/',

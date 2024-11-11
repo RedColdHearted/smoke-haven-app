@@ -33,13 +33,17 @@
                 <div>
                     <i class="bi bi-people"></i>
                     <span class="ms-2"> {{supplier.name}} &nbsp; </span>
+                    {% if supplier.inn %}
                     <strong>ИНН:</strong> {{supplier.inn}}  &nbsp; 
+                    {% elif supplier.bik %}
                     <strong>БИК:</strong> {{supplier.bik}}  &nbsp; 
+                    {% elif supplier.phone_number %}
                     <strong>Телефон:</strong> {{supplier.phone_number}} 
+                    {% endif %}
                 </div>
-                <button class="btn btn-outline-primary edit-button">
+                <a href="{% url 'products:update_supplier' supplier.pk %}" class="btn btn-outline-primary edit-button">
                     <i class="bi bi-pencil"></i> Редактировать
-                </button>
+                </a>
             </div>
             {% endfor %}
         </div>

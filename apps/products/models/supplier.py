@@ -19,16 +19,22 @@ class Supplier(BaseModel):
         validators=[validate_inn],
         verbose_name=_("INN"),
         max_length=12,
+        blank=True,
+        null=True,
     )
     bik = models.CharField(
         validators=[validate_bik],
         verbose_name=(_("BIK")),
         max_length=9,
+        blank=True,
+        null=True,
     )
     phone_number = models.CharField(
         validators=[validate_russian_phone_number],
         verbose_name=_("Phone number"),
         max_length=20,
+        blank=True,
+        null=True,
     )
 
     class Meta:

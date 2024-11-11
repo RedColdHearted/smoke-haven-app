@@ -5,7 +5,7 @@ from apps.products.models import Supplier
 from ..models.utils import generate_two_week_pass_date
 
 
-class InvoiceCreateForm(forms.ModelForm):
+class InvoiceForm(forms.ModelForm):
     """Invoice create from."""
 
     amount_to_pay = forms.DecimalField(

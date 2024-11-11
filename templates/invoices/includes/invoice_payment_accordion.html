@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="container">
     <div class="d-flex justify-content-between mb-3">
-        <h3>Платежки накладной</h3>
+        <h3>Платежки</h3>
         <a href="{% url 'invoices:create_invoice_payment' invoice.pk %}" class="btn btn-primary ms-3">
             <i class="bi bi-plus"></i>
             Добавить платежку к накладной
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="deleteModal{{ invoice_payment.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleteModal{{ invoice_payment.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" style="margin-top: 10%">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">

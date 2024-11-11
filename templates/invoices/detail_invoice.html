@@ -11,6 +11,50 @@
 <link rel="stylesheet" href="{% static 'invoices/css/invoices.css' %}" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link rel="stylesheet" href="{% static 'invoices/css/detail_invoice.css' %}"  />
+<style>
+.document-tile {
+    position: relative;
+}
+
+.hidden-button {
+    display: none; /* Скрыть кнопки по умолчанию */
+}
+
+.document-tile:hover .hidden-button {
+    display: inline-block; /* Показать кнопки при наведении */
+}
+
+.button-container {
+    position: absolute;
+    top: 10px; /* Позиция кнопок */
+    right: 10px; /* Позиция кнопок */
+}
+.document-tile {
+    position: relative;
+}
+
+.hidden-button {
+    display: none; /* Скрыть кнопки по умолчанию */
+}
+
+.document-tile:hover .hidden-button {
+    display: inline-block; /* Показать кнопки при наведении */
+}
+
+.button-container {
+    position: absolute;
+    top: 10px; /* Позиция кнопок */
+    right: 10px; /* Позиция кнопок */
+}
+
+.document-name {
+    white-space: nowrap; /* Запретить перенос строк */
+    overflow: hidden; /* Скрыть переполнение */
+    text-overflow: ellipsis; /* Добавить многоточие */
+    width: 100%; /* Занять всю ширину родительского блока */
+}
+</style>
+
 {% endblock %}
 
 {% block page_name %}
@@ -28,7 +72,7 @@
                 <a href="{% url 'invoices:invoices' %}" class="btn btn-secondary">
                     <i class="bi bi-arrow-left"></i> Вернуться к списку
                 </a>
-                <a href="#" class="btn btn-warning">
+                <a href="{% url 'invoices:update_invoice' invoice.pk %}" class="btn btn-warning">
                      <i class="bi bi-pencil"></i> Изменить 
                 </a>
                 <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">

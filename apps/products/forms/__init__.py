@@ -1,1 +1,1 @@
-from .supplier import SupplierCreateForm
+from .supplier import SupplierForm

@@ -1,8 +1,8 @@
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
-from django.views.generic import DetailView, DeleteView
+from django.views.generic import DetailView, DeleteView, UpdateView
 from django.shortcuts import redirect
-from ..forms import InvoiceCreateForm, DocumentForm
+from ..forms import InvoiceForm, DocumentForm
 from ..models import Document
 from django.contrib.contenttypes.models import ContentType
 from django.utils.datastructures import MultiValueDictKeyError
@@ -21,7 +21,9 @@ class DetailInvoiceView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["payment_percentage"] = int((self.object.total_amount / self.object.amount_to_pay) * 100) if self.object.amount_to_pay > 0 else 0
+        context["payment_percentage"] = int(
+            (self.object.total_amount / self.object.amount_to_pay) * 100,
+        ) if self.object.amount_to_pay > 0 else 0
         context["documents"] = Document.objects.filter(
             content_type=ContentType.objects.get_for_model(self.object),
             object_id=self.object.id,
@@ -32,8 +34,8 @@ class DetailInvoiceView(LoginRequiredMixin, DetailView):
 
 class ListInvoiceView(LoginRequiredMixin, FilterView):
     model = Invoice
-    template_name = 'invoices/invoices.html'
-    context_object_name = 'invoices'
+    template_name = "invoices/invoices.html"
+    context_object_name = "invoices"
     filterset_class = InvoiceFilter
     paginate_by = 10
     queryset = Invoice.objects.with_total_paid_amount()
@@ -43,7 +45,7 @@ class CreateInvoiceView(LoginRequiredMixin, FormView):
     """Invoice create class-based view."""
 
     template_name = "invoices/create_invoice.html"
-    form_class = InvoiceCreateForm
+    form_class = InvoiceForm
     success_url = reverse_lazy("invoices:invoices")
 
     def get_context_data(self, **kwargs):
@@ -86,8 +88,24 @@ class CreateInvoiceView(LoginRequiredMixin, FormView):
 
             return redirect(self.success_url)
         return self.form_invalid(invoice_form)
-    
+
 
 class DeleteInvoiceView(LoginRequiredMixin, DeleteView):
     model = Invoice
-    success_url = reverse_lazy('invoices:invoices')
+    success_url = reverse_lazy("invoices:invoices")
+
+
+class UpdateInvoiceView(LoginRequiredMixin, UpdateView):
+    model = Invoice
+    template_name = "invoices/update_invoice.html"
+    context_object_name = "invoice"
+    form_class = InvoiceForm
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "invoices:update_invoice",
+            kwargs={
+            "pk": self.object.pk,
+            }
+        )
+

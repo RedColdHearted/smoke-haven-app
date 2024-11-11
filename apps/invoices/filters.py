@@ -7,7 +7,6 @@ from apps.products.models import Supplier
 
 class InvoiceFilter(filterset.FilterSet):
     """Represent filter of issues list."""
-    
 
     id = filterset.NumberFilter(
         widget=forms.NumberInput(

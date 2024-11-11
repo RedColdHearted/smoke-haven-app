@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from ..models import Supplier
 
 
-class SupplierCreateForm(forms.ModelForm):
+class SupplierForm(forms.ModelForm):
     """Supplier create from."""
 
     name = forms.CharField(
@@ -24,6 +24,7 @@ class SupplierCreateForm(forms.ModelForm):
             }
         ),
         label=_("supplier's inn"),
+        required=False,
     )
     bik = forms.CharField(
         widget=forms.TextInput(
@@ -33,6 +34,7 @@ class SupplierCreateForm(forms.ModelForm):
             }
         ),
         label=_("supplier's bik"),
+        required=False,
     )
     phone_number = forms.CharField(
         widget=forms.TextInput(
@@ -42,6 +44,7 @@ class SupplierCreateForm(forms.ModelForm):
             }
         ),
         label=_("supplier's phone number"),
+        required=False,
     )
     class Meta:
         model = Supplier

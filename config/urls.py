@@ -1,9 +1,11 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include,re_path 
+from django.conf import settings
+
 
 from debug_toolbar.toolbar import debug_toolbar_urls
 
-from apps.core.views import IndexView
+from apps.core.views import IndexView, protected_serve
 
 urlpatterns = [
     path(
@@ -30,3 +32,8 @@ urlpatterns = [
 ]
 
 urlpatterns += debug_toolbar_urls()
+urlpatterns += re_path(
+    r'^media/(?P<path>.*)$',
+    protected_serve,
+    name='protected_media',
+),

@@ -1,10 +1,10 @@
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 
 from ..models import Supplier
-from ..forms import SupplierCreateForm
+from ..forms import SupplierForm
 
 
 class CreateSupplierView(LoginRequiredMixin, CreateView):
@@ -12,8 +12,16 @@ class CreateSupplierView(LoginRequiredMixin, CreateView):
 
     model = Supplier
     template_name = "products/create_supplier.html"
-    form_class = SupplierCreateForm
+    form_class = SupplierForm
     success_url = reverse_lazy("products:suppliers")
+
+
+class UpdateSupplierView(LoginRequiredMixin, UpdateView):
+    model = Supplier
+    template_name = "products/update_supplier.html"
+    form_class = SupplierForm
+    success_url = reverse_lazy("products:suppliers")
+
 
 
 class ListSupplierView(LoginRequiredMixin, ListView):
