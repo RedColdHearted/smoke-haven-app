@@ -10,7 +10,7 @@ body {
 .content-container {
     max-width: 600px;
     margin: auto;
-    padding: 2rem;
+    padding: 1px;
     background-color: #333;
     border-radius: 10px;
     margin-top: 2rem;

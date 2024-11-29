@@ -1,6 +1,7 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
-from django_filters import filterset, widgets
+from django_filters import filterset
 
 from .models import Invoice
 from apps.products.models import Supplier
@@ -77,14 +78,20 @@ class InvoiceFilter(filterset.FilterSet):
         ),
         label="Дата до",
     )
-    is_fully_paid = filterset.BooleanFilter(
-        widget=widgets.BooleanWidget(
+
+    is_fully_paid = filterset.ChoiceFilter(
+        choices=(
+            (True, _("Paid"),),
+            (False, _("Not paid"),),
+        ),
+        widget=forms.Select(
             attrs={
                 "class": "form-control",
-                "data-placeholder": "выберете статус",
+                "data-placeholder": _("choice status"),
             },
         ),
         label="поиск по статусу оплаты",
+        empty_label="выберите статус",
     )
 
     class Meta:
