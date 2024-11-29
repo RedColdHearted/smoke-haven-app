@@ -1,4 +1,3 @@
-from typing import Self
 from django.db.models import (
     QuerySet,
     Case,
@@ -17,7 +16,7 @@ from .. import models
 class InvoiceQueryset(QuerySet):
     """Queryset class for `Invoice` model."""
 
-    def with_total_paid_amount(self) -> Self:
+    def with_total_paid_amount(self):
         """Annotate `InvoiceQueryset` with total amount of related payments."""
 
         total_amount_subquery = models.InvoicePayment.objects.filter(

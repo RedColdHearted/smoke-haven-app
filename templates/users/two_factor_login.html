@@ -56,10 +56,9 @@
     <div class="login-box">
         <form method="post">
             {% csrf_token %}
-            {{ form|crispy }}
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-light rounded">Войти</button>
-            </div>
+            <input type="text" name="token" placeholder="Enter your 2FA code" required>
+            <button type="submit">Submit</button>
+            {% if error %}<p>{{ error }}</p>{% endif %}
         </form>
     </div>
 </div>
@@ -68,3 +67,5 @@
 
 </body>
 </html>
+
+

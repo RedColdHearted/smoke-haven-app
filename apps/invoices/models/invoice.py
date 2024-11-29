@@ -26,8 +26,9 @@ class Invoice(BaseModel):
     supplier = models.ForeignKey(
         to="products.Supplier",
         verbose_name=_("Supplier id"),
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name="invoices",
+        null=True,
     )
     deadline = models.DateField(
         default=generate_two_week_pass_date,

@@ -1,8 +1,9 @@
 # Custom model for Auth
 AUTH_USER_MODEL = "users.User"
 
-AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
-
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -26,5 +27,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_REDIRECT_URL = "index"
-LOGIN_URL = "users:login"
-LOGOUT_REDIRECT_URL = "users:login"
+LOGIN_URL = 'two_factor:login'
+# LOGIN_URL = "users:login"
+LOGOUT_REDIRECT_URL = "two_factor:login"

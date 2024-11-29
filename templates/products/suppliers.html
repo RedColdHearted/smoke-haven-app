@@ -35,9 +35,11 @@
                     <span class="ms-2"> {{supplier.name}} &nbsp; </span>
                     {% if supplier.inn %}
                     <strong>ИНН:</strong> {{supplier.inn}}  &nbsp; 
-                    {% elif supplier.bik %}
+                    {% endif %}
+                    {% if supplier.bik %}
                     <strong>БИК:</strong> {{supplier.bik}}  &nbsp; 
-                    {% elif supplier.phone_number %}
+                    {% endif %}
+                    {% if supplier.phone_number %}
                     <strong>Телефон:</strong> {{supplier.phone_number}} 
                     {% endif %}
                 </div>

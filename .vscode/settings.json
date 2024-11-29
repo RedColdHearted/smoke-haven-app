@@ -3,7 +3,11 @@
         "dotenv",
         "filterset",
         "imagekit",
-        "imagekitmodels"
+        "imagekitmodels",
+        "pyotp",
+        "qrcode",
+        "totp",
+        "uidb"
     ],
     "files.exclude": {
        "**/__pycache__": true

@@ -16,6 +16,10 @@ THIRD_PARTY = (
     "crispy_forms",
     "crispy_bootstrap5",
     "debug_toolbar",
+    "two_factor",
+    "django_otp",
+    'django_otp.plugins.otp_static',
+    "django_otp.plugins.otp_totp",
 )
 
 LOCAL_APPS = (

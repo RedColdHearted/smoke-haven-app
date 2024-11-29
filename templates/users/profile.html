@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}Профиль{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="{% static 'users/css/profile.css' %}" />
+{% endblock %}
+
+{% block page_name %}
+<div class="w-100 d-flex justify-content-center">
+    <a class="navbar-brand mx-auto" href="#">Профиль</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="card options-container">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Информация о пользователе {{ user.first_name }} {{ user.last_name }}</h5>
+                    <a href="{% url 'users:update_info' %}" class="btn btn-warning">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h6>Логин: {{ user.username }}</h6>
+                    <h6>Email: {{ user.email | slice:1}}<span>*****</span>{{ user.email | slice:"-10:"}}</h6>
+                    <h6>Дата создания аккаунта: {{ user.created|date:"d.m.Y" }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-4 ">
+        <div class="col-md-8">
+            <div class="card options-container">
+                <div class="card-header">
+                    <h5>Опции</h5>
+                </div>
+                <div class="options-container">
+                    <a href="{% url 'password_reset' %}" class="btn btn-primary">Сбросить пароль</a>
+                    <a href="{% url 'two_factor:profile' %}" class="btn btn-primary">Настройка безопасности</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -1,3 +1,4 @@
+from .env_values import config
 from .authentication import *
 from .databases import *
 from .installed_apps import *
@@ -6,6 +7,7 @@ from .middleware import *
 from .paths import *
 from .storage import *
 from .templates import *
+from .smtp import *
 
 APPEND_SLASH = False
 ALLOWED_HOSTS = ["*"]

@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LogoutView
 from django.urls import path
 
-from .views import CustomLoginView
+from .views import ProfileView, UserUpdateView
 
 app_name = "users"
 
@@ -12,11 +12,13 @@ urlpatterns = [
         name="logout",
     ),
     path(
-        "login/",
-        CustomLoginView.as_view(
-            template_name="users/login.html",
-            redirect_authenticated_user=True,
-        ),
-        name="login",
+        "profile/",
+        ProfileView.as_view(),
+        name="profile",
     ),
+    path(
+        "update-info/",
+        UserUpdateView.as_view(),
+        name="update_info",
+    )
 ]
