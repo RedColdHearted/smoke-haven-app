@@ -58,6 +58,7 @@
 <div class="login-container">
     <div class="login-box">
         <form action="" method="post">
+            {{ form.error|crispy }}
             {% block main_form_content %}
             {% csrf_token %}
             {{ wizard.management_form }}

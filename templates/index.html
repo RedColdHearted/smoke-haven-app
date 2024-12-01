@@ -4,7 +4,10 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block style %}
+<!-- Подключение Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
+
 {% block page_name %}
 <div class="w-100 d-flex justify-content-center">
     <a class="navbar-brand mx-auto" href="#">Главная</a>
@@ -12,7 +15,106 @@
 {% endblock %}
 
 {% block content %}
-    <div class="content-container text-center">
-        <p>Это основной блок с текстом на главной странице.</p>
+<div class="container mt-4">
+    <h2>Статистика</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Поставщики</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{total_invoices_sum}}₽</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Общая сумма накладных</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{total_suppliers}}</h5>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6">
+            <h4>Общая сумма накладных по месяцам</h4>
+            <canvas id="invoicesChart"></canvas>
+        </div>
+        <div class="col-md-4">
+            <h4>Распределение поставщиков</h4>
+            <canvas id="suppliersChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Данные для графикова накладных
+    const invoiceStatistic = {{ invoice_statistic|safe }};
+    const months = invoiceStatistic.map(entry => entry.month);
+    const totalAmounts = invoiceStatistic.map(entry => entry.total_amount);
+
+    // График сумм накладных
+    const ctxInvoices = document.getElementById('invoicesChart').getContext('2d');
+    const invoicesChart = new Chart(ctxInvoices, {
+        type: 'bar', // Вы можете изменить тип графика на 'line', 'pie', и т.д.
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Сумма накладных по месяцам',
+                data: totalAmounts,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    // График распределения поставщиков
+    const suppliersStatistic = {{ suppliers_statistic|safe }};
+        // Извлекаем имена поставщиков и количество накладных
+        const supplierNames = suppliersStatistic.map(entry => entry.name);
+        const supplierCounts = suppliersStatistic.map(entry => entry.invoice_count);
+
+        // График количества накладных от поставщиков
+        const ctxSuppliers = document.getElementById('suppliersChart').getContext('2d');
+        const suppliersChart = new Chart(ctxSuppliers, {
+            type: 'pie',
+            data: {
+                labels: supplierNames,
+                datasets: [{
+                    label: 'Количество накладных от поставщиков',
+                    data: supplierCounts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+</script>
+
 {% endblock %}
