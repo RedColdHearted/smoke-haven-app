@@ -16,3 +16,6 @@ media/
 
 #compiled languages file
 django.mo
+
+#static directory (produced by manage.py collectstatic)
+static

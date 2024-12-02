@@ -29,7 +29,7 @@
             <div class="card text-white bg-danger mb-3">
                 <div class="card-header">Количество поставщиков</div>
                 <div class="card-body">
-                    <h5 class="card-title">{{total_suppliers}}</h5>
+                    <h5 class="card-title">{{suppliers_count}}</h5>
                 </div>
             </div>
         </div>
@@ -39,8 +39,8 @@
         <div class="col-md-6">
             <form method="get" action="" class="d-flex align-items-center mb-4">
                 <label for="year" class="me-2">Выберите год:</label>
-                <select name="year" id="year" class="form-select me-2 w-25" aria-label="Выберите год">
-                    {% for year in years %}
+                <select name="year" id="year_select" class="form-select me-2 w-25" aria-label="Выберите год">
+                    {% for year in years_list %}
                         <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
                     {% endfor %}
                 </select>
@@ -57,6 +57,7 @@
 </div>
 
 <script>
+    document.getElementById("year_select").value = "{{selected_year}}";
     const invoiceStatistic = {{ invoice_statistic|safe }};
     const months = invoiceStatistic.map(entry => entry.month);
     const totalAmounts = invoiceStatistic.map(entry => entry.total_amount);
