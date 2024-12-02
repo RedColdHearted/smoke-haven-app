@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Sum, Count
 from django.db.models.functions import TruncMonth
+from django.utils import timezone
 
 from apps.invoices.models import Invoice
 from apps.products.models import Supplier
@@ -19,9 +20,17 @@ class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
+        # Получаем текущий год или год из GET-параметра
+        current_year = timezone.now().year
+        year = self.request.GET.get('year', current_year)
+
+        # Создаем список годов для выбора
+        years = list(range(current_year, current_year - 5, -1))
+
         # invoices
         monthly_invoices = (
             Invoice.objects
+            .filter(deadline__year=year)  # Фильтр по году
             .annotate(month=TruncMonth("deadline"))
             .values("month")
             .annotate(total_amount=Sum("amount_to_pay"))
@@ -34,10 +43,10 @@ class IndexView(LoginRequiredMixin, TemplateView):
                 "total_amount": float(entry["total_amount"]) or 0
             })
 
-        total_invoices_sum = Invoice.objects.aggregate(
+        total_invoices_sum = Invoice.objects.filter(deadline__year=year).aggregate(
             total=Sum("amount_to_pay"),
-        )["total"]
-
+        )["total"] or 0
+        print(total_invoices_sum)
         # suppliers
         supplier_invoices_count = (
             Supplier.objects
@@ -58,6 +67,9 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context["suppliers_statistic"] = suppliers_statistic
         context["total_invoices_sum"] = total_invoices_sum
         context["total_suppliers"] = total_suppliers
+        context["selected_year"] = year
+        context["current_year"] = current_year
+        context["years"] = years
         return context
 
 
