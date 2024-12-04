@@ -31,9 +31,11 @@
             <h4>Общая сумма накладных по месяцам</h4>
             <h5 class="card-title text-white-50">Всего {{ total_sum }}₽</h5>
             <canvas id="invoicesChart"></canvas>
+            {% if total_count %}
             <button id="downloadBtn" class="btn btn-success mt-2" style="font-size: 14px; height: 2.2rem; width: auto;">
                 <i class="bi bi-download"></i> Скачать график
             </button>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -66,12 +68,15 @@
             }
         }
     });
-    document.getElementById('downloadBtn').addEventListener('click', function() {
-        const link = document.createElement('a');
-        link.href = invoicesChart.toBase64Image(); // Получаем изображение графика
-        link.download = 'chart.png'; // Имя файла
-        link.click(); // Имитируем клик по ссылке
-    });
+    if ({{total_count}}){
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.href = invoicesChart.toBase64Image();
+            link.download = 'chart.png';
+            link.click();
+        });
+    }
+    
 </script>
 
 {% endblock %}

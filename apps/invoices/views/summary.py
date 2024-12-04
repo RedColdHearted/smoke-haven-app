@@ -12,7 +12,7 @@ from apps.invoices.services.summary.functions import (
 )
 
 class SummaryView(LoginRequiredMixin, TemplateView):
-    """Class-based view for index page."""
+    """Class-based view for invoices summary page."""
 
     template_name = "invoices/summary.html"
 

@@ -30,11 +30,18 @@ def monthly_stat(year: int) -> dict[str, str | float | int]:
 def vital_stat(year: int) -> NumericStat:
     query = Invoice.objects.filter(deadline__year=year)
     length = len(query)
+    if length:
+        return NumericStat(
+            count=length,
+            avg=sum(item.amount_to_pay for item in query) / length,
+            maximum=max(item.amount_to_pay for item in query),
+            minimum=min(item.amount_to_pay for item in query),
+        )
     return NumericStat(
-        count=length,
-        avg=sum(item.amount_to_pay for item in query) / length,
-        maximum=max(item.amount_to_pay for item in query),
-        minimum=min(item.amount_to_pay for item in query),
+        count=0,
+        avg=0.00,
+        maximum=0.00,
+        minimum=0.00,
     )
 
 
