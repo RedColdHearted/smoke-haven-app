@@ -21,7 +21,7 @@
     </form>
     <div class="row mt-1">
         <div class="col-md-6 content-container p-3 mt-2">
-            <p>Количество накладных: <strong>{{ total_amount }}</strong></p>
+            <p>Количество накладных: <strong>{{ total_count }}</strong></p>
             <p>Средняя сумма накладной: <strong>{{ average_amount }}₽</strong></p>
             <p>Минимальная сумма накладной: <strong>{{ min_amount }}₽</strong></p>
             <p>Максимальная сумма накладной: <strong>{{ max_amount }}₽</strong></p>
@@ -31,6 +31,9 @@
             <h4>Общая сумма накладных по месяцам</h4>
             <h5 class="card-title text-white-50">Всего {{ total_sum }}₽</h5>
             <canvas id="invoicesChart"></canvas>
+            <button id="downloadBtn" class="btn btn-success mt-2" style="font-size: 14px; height: 2.2rem; width: auto;">
+                <i class="bi bi-download"></i> Скачать график
+            </button>
         </div>
     </div>
 </div>
@@ -62,6 +65,12 @@
                 }
             }
         }
+    });
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        const link = document.createElement('a');
+        link.href = invoicesChart.toBase64Image(); // Получаем изображение графика
+        link.download = 'chart.png'; // Имя файла
+        link.click(); // Имитируем клик по ссылке
     });
 </script>
 
