@@ -11,11 +11,13 @@ from .views import (
     UploadDocumentByInvoiceView,
     InvoicePaymentCreateView,
     DeleteInvoicePaymentView,
+    SummaryView,
 )
 
 app_name = "invoices"
 
 urlpatterns = [
+    # Invoice
     path(
         "<int:pk>/",
         DetailInvoiceView.as_view(),
@@ -41,6 +43,7 @@ urlpatterns = [
         UpdateInvoiceView.as_view(),
         name="update_invoice",
     ),
+    # Document
     path(
         'documents/download/<int:pk>/',
         DownloadDocumentView.as_view(),
@@ -56,14 +59,21 @@ urlpatterns = [
         UploadDocumentByInvoiceView.as_view(),
         name='document_upload_by_invoice'
     ),
+    # Invoice payment
     path(
-        'invoices/invoice_payment/create/<int:invoice_id>/',
+        'invoice_payment/create/<int:invoice_id>/',
         InvoicePaymentCreateView.as_view(),
         name='create_invoice_payment',
     ),
     path(
-        "invoices/invoice_payment/delete/<int:pk>/",
+        "invoice_payment/delete/<int:pk>/",
         DeleteInvoicePaymentView.as_view(),
         name="delete_invoice_payment",
+    ),
+    # Summary
+    path(
+        "summary/",
+        SummaryView.as_view(),
+        name="summary",
     ),
 ]

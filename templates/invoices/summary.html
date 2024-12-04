@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Статистика накладных{% endblock %}
+
+{% block style %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Сводка по накладным за {{ selected_year }}</h2>
+    <form method="get" action="" class="d-flex align-items-center mb-4 mt-3">
+        <label for="year" class="me-2">Выберите год:</label>
+        <select name="year" id="year_select" class="form-select me-2 w-25" aria-label="Выберите год">
+            {% for year in years_list %}
+                <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Показать</button>
+    </form>
+    <div class="row mt-1">
+        <div class="col-md-6 content-container p-3 mt-2">
+            <p>Количество накладных: <strong>{{ total_amount }}</strong></p>
+            <p>Средняя сумма накладной: <strong>{{ average_amount }}₽</strong></p>
+            <p>Минимальная сумма накладной: <strong>{{ min_amount }}₽</strong></p>
+            <p>Максимальная сумма накладной: <strong>{{ max_amount }}₽</strong></p>
+        </div>
+
+        <div class="col-md-6">
+            <h4>Общая сумма накладных по месяцам</h4>
+            <h5 class="card-title text-white-50">Всего {{ total_sum }}₽</h5>
+            <canvas id="invoicesChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("year_select").value = "{{ selected_year }}";
+    const invoiceStatistic = {{ monthly_stat|safe }};
+    const months = invoiceStatistic.map(entry => entry.month);
+    const totalAmounts = invoiceStatistic.map(entry => entry.total_amount);
+
+    const ctxInvoices = document.getElementById('invoicesChart').getContext('2d');
+    const invoicesChart = new Chart(ctxInvoices, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Сумма накладных по месяцам',
+                data: totalAmounts,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}
