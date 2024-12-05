@@ -1,12 +1,12 @@
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.db.models.functions import TruncMonth
 from django.utils.translation import gettext_lazy as _
 
-from ...models import Invoice
+from ...models import Invoice, InvoicePayment
 from .dataclasses import NumericStat
 
 def years_list(current_year: int)-> list[int]:
-   return list(range(current_year, current_year - 5, -1))
+   return list(range(current_year, current_year - 2, -1))
 
 
 def monthly_stat(year: int) -> dict[str, str | float | int]:
@@ -44,8 +44,23 @@ def vital_stat(year: int) -> NumericStat:
         minimum=0.00,
     )
 
+def most_frequent_payment_type(year: int):
+    return _(
+        InvoicePayment.objects.filter(
+                invoice__deadline__year=year
+            ).values(
+                "payment_type",
+            ).annotate(
+                count=Count("payment_type"),
+            ).order_by(
+                "-count",
+            ).first()["payment_type"]
+        )
+
 
 def total_sum(year: int) -> int:
     return Invoice.objects.filter(deadline__year=year).aggregate(
             total=Sum("amount_to_pay"),
         )["total"] or 0
+
+

@@ -9,7 +9,7 @@ from apps.core.views import IndexView, protected_serve
 
 
 urlpatterns = [
-    path("two_factor/", include(tf_urls)),
+    path("", include(tf_urls)),
     path(
         "",
         IndexView.as_view(),
@@ -45,22 +45,22 @@ urlpatterns += (
 
 urlpatterns += [
     path(
-        "password_reset/",
+        "account/password_reset/",
         auth_views.PasswordResetView.as_view(),
         name="password_reset",
     ),
     path(
-        "password_reset/done/",
+        "account/password_reset/done/",
         auth_views.PasswordResetDoneView.as_view(),
         name="password_reset_done",
     ),
     path(
-        "reset/<uidb64>/<token>/",
+        "account/reset/<uidb64>/<token>/",
         auth_views.PasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),
     path(
-        "reset/done/",
+        "account/reset/done/",
         auth_views.PasswordResetCompleteView.as_view(),
         name="password_reset_complete",
     ),

@@ -14,8 +14,8 @@ venv
 #django media files
 media/
 
-#compiled languages file
+#compiled translation file
 django.mo
 
 #static directory (produced by manage.py collectstatic)
-static
+static/

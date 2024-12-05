@@ -9,6 +9,7 @@ from apps.invoices.services.summary.functions import (
     monthly_stat,
     vital_stat,
     total_sum,
+    most_frequent_payment_type,
 )
 
 class SummaryView(LoginRequiredMixin, TemplateView):
@@ -23,7 +24,6 @@ class SummaryView(LoginRequiredMixin, TemplateView):
         v_stat = vital_stat(selected_year)
 
         context["selected_year"] = selected_year
-        context["current_year"] = current_year
         context["years_list"] = years_list(current_year)
         context["total_sum"] = total_sum(selected_year)
         context["monthly_stat"] = monthly_stat(selected_year)
@@ -31,4 +31,6 @@ class SummaryView(LoginRequiredMixin, TemplateView):
         context["average_amount"] = v_stat.avg
         context["max_amount"] = v_stat.maximum
         context["min_amount"] = v_stat.minimum
+        if context["monthly_stat"]:
+            context["payment_type"] = most_frequent_payment_type(selected_year)
         return context

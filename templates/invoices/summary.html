@@ -20,8 +20,18 @@
         <button type="submit" class="btn btn-primary">Показать</button>
     </form>
     <div class="row mt-1">
-        <div class="col-md-6 content-container p-3 mt-2">
+        <div class="col-md-6 content-container p-3 mt-2 ">
             <p>Количество накладных: <strong>{{ total_count }}</strong></p>
+            <p>Предпочитаемый способ оплаты: 
+                <strong>
+                    {% if payment_type %}
+                    {{ payment_type }}
+                    {% else %}
+                    Нет информации
+                    {% endif %}
+                </strong>
+            </p>
+            <hr class="bg-danger border-2 border-top border-secondary" />
             <p>Средняя сумма накладной: <strong>{{ average_amount }}₽</strong></p>
             <p>Минимальная сумма накладной: <strong>{{ min_amount }}₽</strong></p>
             <p>Максимальная сумма накладной: <strong>{{ max_amount }}₽</strong></p>
@@ -52,7 +62,7 @@
         data: {
             labels: months,
             datasets: [{
-                label: 'Сумма накладных по месяцам',
+                label: 'Сумма накладных за месяц',
                 data: totalAmounts,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',

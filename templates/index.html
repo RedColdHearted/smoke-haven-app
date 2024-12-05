@@ -4,20 +4,47 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block style %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{% static 'core/css/index.css' %}" />
+<style>
+    .content-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+</style>
 {% endblock %}
 
 {% block page_name %}
-<div class="w-100 d-flex justify-content-center">
-    <a class="navbar-brand mx-auto" href="#">Главная</a>
-</div>
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    тут что то должно быть
+<div class="content-container mt-4 p-3">
+    <div class="text-center mb-4">
+        <h1>Добро пожаловать</h1>
+        <p>Управляйте вашим магазином легко и удобно</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+                <div class="chapter-card">
+                    <h5 class="card-title">Аналитика</h5>
+                    <p class="card-text">Просмотрите общую статистику с визуализацией.</p>
+                    <div>
+                        <div class="mt-2 ">
+                            <a href="{% url 'invoices:summary' %}" class="btn btn-primary w-50">
+                                Накладные
+                                <i class="bi bi-caret-right-fill"></i>
+                            </a>
+                        </div>
+
+                        <div class="mt-2">
+                            <a href="#" class="btn btn-primary w-50">
+                                Поставщики
+                                <i class="bi bi-caret-right-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
 </div>
-
-
-
 {% endblock %}
