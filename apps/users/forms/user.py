@@ -3,7 +3,7 @@ from django import forms
 from ..models import User
 
 
-class UserUpdateForm(forms.ModelForm):
+class UserInitialsUpdateForm(forms.ModelForm):
     """User update form."""
 
     first_name = forms.CharField(

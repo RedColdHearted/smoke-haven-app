@@ -1,7 +1,6 @@
 
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 from apps.invoices.services.summary.functions import (
