@@ -19,3 +19,9 @@ django.mo
 
 #static directory (produced by manage.py collectstatic)
 static/
+
+# google drive service account secret
+**/service-secrets.json
+
+# db dump
+db_dump.json

@@ -2,8 +2,10 @@
     "cSpell.words": [
         "dotenv",
         "filterset",
+        "gauth",
         "imagekit",
         "imagekitmodels",
+        "pydrive",
         "pyotp",
         "qrcode",
         "totp",

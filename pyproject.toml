@@ -17,9 +17,9 @@ crispy-bootstrap5 = "^2024.10"
 django-debug-toolbar = "^4.4.6"
 django-otp = "^1.5.4"
 pyotp = "^2.9.0"
-fastapi = "^0.115.5"
 django-two-factor-auth = "^1.17.0"
 phonenumberslite = "^8.13.50"
+pydrive2 = "^1.21.3"
 
 
 [build-system]

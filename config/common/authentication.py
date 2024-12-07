@@ -28,5 +28,4 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = 'two_factor:login'
-# LOGIN_URL = "users:login"
 LOGOUT_REDIRECT_URL = "two_factor:login"

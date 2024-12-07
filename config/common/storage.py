@@ -12,3 +12,6 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
+
+GOOGLE_CREDENTIALS_PATH = "client_secrets.json"
+
