@@ -27,6 +27,10 @@ urlpatterns = [
         "invoices/",
         include("apps.invoices.urls"),
     ),
+    path(
+        "backups/",
+        include("apps.backups.urls"),
+    ),
 ]
 
 urlpatterns += debug_toolbar_urls()

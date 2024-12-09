@@ -27,6 +27,7 @@ LOCAL_APPS = (
     "apps.users",
     "apps.products",
     "apps.invoices",
+    "apps.backups",
 )
 
 INSTALLED_APPS += THIRD_PARTY + LOCAL_APPS

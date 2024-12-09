@@ -8,10 +8,19 @@ from django.views.static import serve
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 
+from apps.backups.models import Backup
+
 class IndexView(LoginRequiredMixin, TemplateView):
     """Class-based view for index page."""
 
     template_name = "index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["last_backup_date"] = Backup.objects.all().order_by(
+            "-created",
+        ).first().created.date
+        return context
 
 
 @login_required

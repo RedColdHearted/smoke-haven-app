@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load format_date %}
 {% load static %}
 
 {% block title %}Главная страница{% endblock %}
@@ -56,7 +57,7 @@
                 <p class="card-text">Сохранение образа базы данных и всех документов.</p>
                 <div>
                     <div class="mt-2 d-flex justify-content-between">
-                        <form action="#" method="post" class="me-2">
+                        <form action="{% url 'backups:create_backup' %}" method="post" class="me-2">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary d-flex align-items-center">
                                 Создать бэкап
@@ -75,7 +76,7 @@
                         </a>
                     </div>
                     <div class="mt-2">
-                        <p class="card-text">Последний бэкап: 12.12.2024</p>
+                        <p class="card-text">Последний бэкап: {{ last_backup_date | format_date }}</p>
                     </div>
                 </div>
             </div>
