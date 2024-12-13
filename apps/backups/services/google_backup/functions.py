@@ -40,7 +40,7 @@ def create_folder(
         'title': title,
         'parents': [
             {'id': parent_folder_id},
-            ],
+        ],
         'mimeType': 'application/vnd.google-apps.folder'
     }
 
@@ -49,7 +49,12 @@ def create_folder(
     return folder
 
 
-def upload_file(drive: GoogleDrive, file_path: str, parent_folder_id: str) -> None:
+def upload_file(
+    drive: GoogleDrive,
+    file_path: str,
+    parent_folder_id: str,
+) -> None:
+    #TODO: avoid media/CACHE folder
     file_drive = drive.CreateFile(
         {
         'title': file_path,

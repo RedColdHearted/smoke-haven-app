@@ -120,13 +120,13 @@
                 <div class="options-container">
                     <a href="{% url 'password_reset' %}" class="btn btn-primary">Сбросить пароль</a>
                     <a href="{% url 'two_factor:profile' %}" class="btn btn-primary">Настройка безопасности</a>
+                    <a href="{% url 'backups:list_backups' %}" class="btn btn-primary">Управление бэкапами</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Модальное окно для загрузки аватарки -->
 <div class="modal fade" id="avatarUploadModal" tabindex="-1" aria-labelledby="avatarUploadModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

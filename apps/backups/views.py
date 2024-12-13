@@ -9,9 +9,17 @@ from apps.backups.services.google_backup.functions import backup
 class BackupListView(LoginRequiredMixin, ListView):
     model = Backup
     paginate_by = 10
-    template_name = "backups/backup_list.html"
+    template_name = "backups/backups.html"
     context_object_name = "backups"
 
+    queryset = Backup.objects.all().order_by("created")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["last_backup_date"] = Backup.objects.all().order_by(
+            "created",
+        ).first().created.date
+        return context
 
 class BackupCreateView(LoginRequiredMixin, CreateView):
     model = Backup
