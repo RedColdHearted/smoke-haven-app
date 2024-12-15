@@ -1,3 +1,4 @@
+from typing import Sequence
 import datetime
 import glob
 
@@ -23,6 +24,12 @@ DEFAULT_DUMP_PATH = "db_dump.json"
 
 
 def authenticate_service_account(gauth: GoogleAuth) -> GoogleAuth:
+    """Authenticate and return google service account.
+
+    Uses credentials from file downloaded on app page in json format.
+    Additionally specified default google apis scopes.
+
+    """
     gauth.credentials = ServiceAccountCredentials.from_json_keyfile_name(
         SERVICE_ACCOUNT_PATH,
         scopes=DRIVE_SCOPES,
@@ -36,12 +43,13 @@ def create_folder(
     title: str,
     parent_folder_id: str = "root",
 ) -> GoogleDriveFile:
+    """Create folder on google drive."""
     file_metadata = {
         'title': title,
         'parents': [
             {'id': parent_folder_id},
         ],
-        'mimeType': 'application/vnd.google-apps.folder'
+        'mimeType': 'application/vnd.google-apps.folder',
     }
 
     folder = drive.CreateFile(file_metadata)
@@ -54,7 +62,7 @@ def upload_file(
     file_path: str,
     parent_folder_id: str,
 ) -> None:
-    #TODO: avoid media/CACHE folder
+    """Upload file to google drive."""
     file_drive = drive.CreateFile(
         {
         'title': file_path,
@@ -68,40 +76,47 @@ def upload_file(
 
 
 def files_list(drive: GoogleDrive, folder_id: str) -> list[GoogleDriveFile]:
+    """Return list of files from google drive folder."""
     return drive.ListFile(
         {'q': f"'{folder_id}' in parents and trashed=false"},
     ).GetList()
 
 
 def clean_folder(drive: GoogleDrive, folder_id: str) -> None:
+    """Full clean of google drive folder"""
     for file in files_list(drive, folder_id):
         file.Delete()
 
 
-def upload_media_dir(drive: GoogleDrive, parent_folder_id: str) -> None:
+def _upload_media_dir(drive: GoogleDrive, parent_folder_id: str) -> None:
+    """Upload all files from media dir, except cache."""
     for file_path in glob.glob(MEDIA_DIR_GLOB):
-        upload_file(drive, file_path, parent_folder_id)
+        if "CACHE" not in file_path:
+            upload_file(drive, file_path, parent_folder_id)
 
 
-def create_db_dump() -> None:
+def create_db_data() -> None:
+    """Create and return db dump by command."""
     with open(DEFAULT_DUMP_PATH,'w') as output:
         call_command('dumpdata',format='json',indent=3,stdout=output)
 
 
-def load_db_dump() -> None:
+def load_db_data() -> None:
+    """Load db dump by command."""
     with open(DEFAULT_DUMP_PATH, 'r+') as input:
         call_command('loaddata', stdin=input)
 
 
 def backup() -> GoogleDriveFile:
+    """Performs backup of db snapshot and media folders to GoogleDrive."""
     gauth = authenticate_service_account(GoogleAuth())
     drive = GoogleDrive(authenticate_service_account(gauth))
-    create_db_dump()
+    create_db_data()
     backup_folder = create_folder(
         drive,
         f"backup_{datetime.datetime.now()}",
         DRIVE_FOLDER_ID,
     )
     upload_file(drive, DEFAULT_DUMP_PATH, backup_folder["id"])
-    upload_media_dir(drive, backup_folder["id"])
+    _upload_media_dir(drive, backup_folder["id"])
     return backup_folder
